@@ -7,7 +7,7 @@ export default function DashboardHorizontalNav() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [avatarDropdown, setAvatarDropdown] = useState(true);
+  const [avatarDropdown, setAvatarDropdown] = useState(false);
 
   const { user, token, logout } = useContext(AuthContext);
 
