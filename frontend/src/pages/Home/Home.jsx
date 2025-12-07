@@ -1,10 +1,13 @@
-import React from 'react';
+import { useContext, React } from 'react';
 import './Home.css'
+import { AuthContext } from '../../contex/AuthContext';
+
 
 function Home() {
+
   return (
     <div className='home'>
-        Hpme
+      pocetna
     </div>
   )
 }

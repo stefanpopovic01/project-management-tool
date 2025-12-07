@@ -5,6 +5,7 @@
   height: 100vh;
   background-color: #fff;
   width: 100%;
+  padding-top: 5rem;
 }
 
 .login-form {
@@ -20,7 +21,7 @@
 .login-form h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #1e3a8a;
+  color: #3b82f6;
 }
 
 .login-form label {
@@ -44,7 +45,7 @@
 
 .login-form button {
   padding: 10px;
-  background-color: #1e3a8a;
+  background-color: #3b82f6;
   color: white;
   border: none;
   border-radius: 6px;
@@ -54,7 +55,7 @@
 }
 
 .login-form button:hover {
-  background-color: #3749b0;
+  background-color: #4886ea;
 }
 
 .register-link {
@@ -65,7 +66,7 @@
 }
 
 .register-link span {
-  color: #1e3a8a;
+  color: #3b82f6;
   cursor: pointer;
   font-weight: bold;
 }

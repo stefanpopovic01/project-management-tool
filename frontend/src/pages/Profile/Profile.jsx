@@ -1,0 +1,96 @@
+import { React, useState, useEffect, useContext } from 'react';
+import { useParams } from "react-router-dom";
+import './Profile.css'
+import { getUser } from '../../api/services/userServices';
+import { AuthContext } from '../../contex/AuthContext';
+
+
+function Profile() {
+
+const { id } = useParams();
+const [user, setUser] = useState(null);
+const [loading, setLoading] = useState(true);
+const { user: loggedInUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        setLoading(true);
+        const res = await getUser(id); 
+        setUser(res.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [id]); // pokreće se kad se id promeni
+
+  const testUser = {
+    projectsCreated: ["Project Manager App", "Task Tracker", "Chat Platform"],
+    projectsContributed: ["CRM Dashboard", "Inventory System"]
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <p>User not found</p>;
+  const isOwner = loggedInUser?.id === id;
+
+  return (
+    <div className='profile-wrap'>
+    <div className="profile-container">
+      {/* LEFT PANEL */}
+      <div className="profile-card">
+        {user.avatar && (<img className="avatar" src={user.avatar} alt="avatar" />)}
+
+        <h2 className="profile-name">{user.name}</h2>
+        <p className="profile-position">{user.position}</p>
+
+        <div className="profile-info">
+          <p>
+            <i class="fa-solid fa-user"></i>
+            {`@${user.username}`}
+          </p>
+          <p>
+            <i className="fa-solid fa-envelope"></i>
+            {user.email}
+          </p>
+        {user.location && (         
+            <p>
+                <i className="fa-solid fa-location-dot"></i>
+                {user.location}
+          </p>)}
+
+          
+        </div>
+
+        <p className="profile-desc">{user.description}</p>
+
+        <button className="edit-btn">
+          <i className="fa-solid fa-pen"></i> {isOwner ? "Edit profile" : "Invite"}
+        </button>
+      </div>
+
+      {/* RIGHT PANEL */}
+      <div className="profile-projects">
+        <h3><i className="fa-solid fa-folder-open"></i> Projects Created</h3>
+        <ul>
+          {testUser.projectsCreated.map((p, i) => (
+            <li key={i}>{p}</li>
+          ))}
+        </ul>
+
+        <h3><i className="fa-solid fa-diagram-project"></i> Projects Contributed</h3>
+        <ul>
+          {testUser.projectsContributed.map((p, i) => (
+            <li key={i}>{p}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    </div>
+  )
+}
+
+export default Profile;

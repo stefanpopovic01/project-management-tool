@@ -19,6 +19,26 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required.'],
         minLength: [3, "Password must have 3+ characters."]
     },
+    name: {
+      type: String,
+        minLenght: [2, "Name should have minimum 1 character."]
+    },
+    description: {
+        type: String,
+        default: ""
+    },
+    avatar: {
+      type: String,
+      default: ""
+    },
+    position: {
+      type: String,
+      default: ""
+    },
+    location: {
+      type: String,
+      default: ""
+    },
     refreshToken: {
         type: String, 
         default: null

@@ -7,6 +7,7 @@ const app = express();
 
 const { loginLimiter, Limiter } = require("./middleware/rateLimiter");
 const authRouter = require("./routes/auth");
+const userRouter = require("./routes/user");
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("Povezan sa bazom."))
@@ -21,5 +22,6 @@ app.get("/", (req, res) => {
 })
 
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 
 app.listen(3000);

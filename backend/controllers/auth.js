@@ -41,7 +41,12 @@ async function Login(req, res) {
         user: {
             id: user._id,
             email: user.email,
-            name: user.username,
+            username: user.username,
+            name: user.name,
+            description: user.description,
+            avatar: user.avatar,
+            position: user.position,
+            location: user.location
             },
         });
 

@@ -1,6 +1,5 @@
 import { React, useContext, useState} from 'react';
 import './Login.css'
-import footer from "../../assets/footer.png"
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/services/authServices';
 import { AuthContext } from '../../contex/AuthContext';
@@ -24,7 +23,8 @@ const handeLogin = async (e) => {
 
       setSuccess(true);
       setError("");
-      loginContext(JSON.stringify(res.data.user), res.data.accessToken);
+      loginContext(res.data.user, res.data.accessToken);
+      navigate("/dashboard");
 
     } catch (err) {
       setError(err.response?.data?.message || "Wrong credentials.");
