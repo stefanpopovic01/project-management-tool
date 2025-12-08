@@ -71,13 +71,13 @@
 }
 
 .error-msg{
-  color: rgb(143, 7, 7);
+  color:  #d9534f;
   margin: 0 auto;
   font-weight: 500;
 }
 
 .success-msg{
-  color: rgb(24, 123, 47);
+  color: #4CAF50;
   margin: 0 auto;
   font-weight: 500;
 }

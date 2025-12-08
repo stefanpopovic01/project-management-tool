@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import './Profile.css'
 import { getUser } from '../../api/services/userServices';
 import { AuthContext } from '../../contex/AuthContext';
+import EditProfile from '../../components/EditProfile/EditProfile';
 
 
 function Profile() {
@@ -10,6 +11,7 @@ function Profile() {
 const { id } = useParams();
 const [user, setUser] = useState(null);
 const [loading, setLoading] = useState(true);
+const [showEdit, setShowEdit] = useState(false);
 const { user: loggedInUser } = useContext(AuthContext);
 
   useEffect(() => {
@@ -67,7 +69,7 @@ const { user: loggedInUser } = useContext(AuthContext);
 
         <p className="profile-desc">{user.description}</p>
 
-        <button className="edit-btn">
+        <button className="edit-btn" onClick={() => setShowEdit(true)}>
           <i className="fa-solid fa-pen"></i> {isOwner ? "Edit profile" : "Invite"}
         </button>
       </div>
@@ -89,6 +91,10 @@ const { user: loggedInUser } = useContext(AuthContext);
         </ul>
       </div>
     </div>
+          
+      {showEdit && (
+        <EditProfile user={loggedInUser} onClose={() => setShowEdit(false)} />
+      )}
     </div>
   )
 }
