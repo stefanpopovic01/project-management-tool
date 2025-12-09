@@ -1,7 +1,8 @@
 .profile-wrap{
     height: 100vh;
     width: 100%;
-    background: #fefefe;
+    background: #ffffff;
+    padding-top: 4rem;
 }
 .profile-container {
   display: flex;
@@ -16,7 +17,7 @@
 /* LEFT CARD */
 .profile-card {
   flex: 1;
-  background: #f4f3f3;
+  background: #fafafa;
   padding: 30px;
   border-radius: 16px;
   border: 1px solid #e5e7eb;
@@ -84,7 +85,7 @@
 /* RIGHT CARD */
 .profile-projects {
   flex: 2;
-  background: #f1f1f1;
+  background: #fafafa;
   padding: 30px;
   border-radius: 16px;
   border: 1px solid #e5e7eb;
@@ -112,7 +113,7 @@
 }
 
 .profile-projects li {
-  background: #f1f1f1;
+  background: #fafafa;
   margin: 8px 0;
   padding: 12px 16px;
   border-radius: 8px;

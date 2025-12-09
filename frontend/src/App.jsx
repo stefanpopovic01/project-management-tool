@@ -9,6 +9,7 @@ import Register from './pages/Register/Register';
 import Profile from './pages/Profile/Profile';
 import Dashboard from './pages/Dashboard/Dashboard';
 import DashboardHorizontalNav from './components/DashboardHorizontalNav/DashboardHorizontalNav';
+import DashboardVerticalNav from './components/DashboardVerticalNav/DashboardVerticalNav';
 
 function App() {
 
@@ -18,11 +19,14 @@ function App() {
     location.pathname.startsWith("/dashboard") ||
     location.pathname.startsWith("/profile/");
     
+  const onlyDashboardRoute = location.pathname.startsWith("/dashboard");
+
   return (
     <>
 
       {!isDashboardRoute && <Navbar />}
       {isDashboardRoute && <DashboardHorizontalNav />}
+      {onlyDashboardRoute && <DashboardVerticalNav />}
 
         <main>
           <Routes>

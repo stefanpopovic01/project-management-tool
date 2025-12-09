@@ -1,4 +1,65 @@
-.dashboard-containter{
+.dashboard-containter {
     width: 100%;
     height: 100vh;
+    padding-top: 4rem;      /* horizontal nav height */
+    padding-left: 250px;    /* vertical nav width */
+}
+
+.dashboard-content {
+    width: 100%;
+    height: 95%;
+    padding: 2rem;
+}
+
+.dash-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #1c2a4a;
+}
+
+.dash-projects-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.dash-project-card {
+    width: 18%;
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.dash-project-card i{
+    color: #3b82f6;
+}
+
+.dash-project-card:hover {
+    transform: translateY(-4px);
+}
+
+.dash-project-card h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #15233b;
+}
+
+.dash-project-card p {
+    font-size: 0.9rem;
+    color: #44516c;
+}
+
+.dash-footer-logo {
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.dash-footer-logo img {
+    width: 25%;
 }
