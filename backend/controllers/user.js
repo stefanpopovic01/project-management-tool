@@ -1,5 +1,24 @@
 const User = require("../models/User");
 
+async function getUsers(req, res) {
+    try {
+
+        const { search } = req.query;
+        let query = {};
+
+        if (search) {
+            query.email = {  $regex: search, $options: "i" }
+        }
+        if (!search) return res.status(400).json({ message: "Search query required" });
+        const users = await User.find(query).select("username email avatar name").limit(10);
+        res.status(200).json( {users} );
+
+    }
+    catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 async function getUser(req, res) {
     try {
 
@@ -29,4 +48,4 @@ async function editUser(req, res) {
     }
 };
 
-module.exports = { getUser, editUser };
+module.exports = { getUsers, getUser, editUser };

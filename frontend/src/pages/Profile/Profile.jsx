@@ -4,6 +4,7 @@ import './Profile.css'
 import { getUser } from '../../api/services/userServices';
 import { AuthContext } from '../../contex/AuthContext';
 import EditProfile from '../../components/EditProfile/EditProfile';
+import defaultLogo from "../../assets/defaultUser.png"
 
 
 function Profile() {
@@ -44,10 +45,10 @@ const { user: loggedInUser } = useContext(AuthContext);
     <div className="profile-container">
       {/* LEFT PANEL */}
       <div className="profile-card">
-        {user.avatar && (<img className="avatar" src={user.avatar} alt="avatar" />)}
+        <img className="avatar" src={user.avatar || defaultLogo} alt="avatar" />
 
-        <h2 className="profile-name">{user.name}</h2>
-        <p className="profile-position">{user.position}</p>
+        <h2 className="profile-name">{user.name || "PlanStack User"}</h2>
+        <p className="profile-position">{user.position || "PlanStack lover.."}</p>
 
         <div className="profile-info">
           <p>
@@ -58,16 +59,14 @@ const { user: loggedInUser } = useContext(AuthContext);
             <i className="fa-solid fa-envelope"></i>
             {user.email}
           </p>
-        {user.location && (         
-            <p>
+          <p>
                 <i className="fa-solid fa-location-dot"></i>
-                {user.location}
-          </p>)}
-
+                {user.location || "PlanStack planet.."}
+          </p>
           
         </div>
 
-        <p className="profile-desc">{user.description}</p>
+        <p className="profile-desc">{user.description || "I am using PlanStack.."}</p>
 
         <button className="edit-btn" onClick={() => setShowEdit(true)}>
           <i className="fa-solid fa-pen"></i> {isOwner ? "Edit profile" : "Invite"}

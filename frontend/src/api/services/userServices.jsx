@@ -1,5 +1,9 @@
 import api from "../axios";
 
+export const getUsers = (search) => {
+    return api.get("/user", { params: { search } });
+}
+
 export const getUser = (id) => {
     return api.get(`/user/${id}`);
 };

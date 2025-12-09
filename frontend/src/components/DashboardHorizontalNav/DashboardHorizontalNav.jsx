@@ -2,12 +2,15 @@ import "./DashboardHorizontalNav.css";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contex/AuthContext";
+import { getUsers } from "../../api/services/userServices";
+import logo from "../../assets/defaultUser.png";
 
 export default function DashboardHorizontalNav() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [avatarDropdown, setAvatarDropdown] = useState(false);
+  const [error, setError] = useState("");
 
   const { user, token, logout } = useContext(AuthContext);
 
@@ -21,33 +24,32 @@ export default function DashboardHorizontalNav() {
     setAvatarDropdown(!avatarDropdown);
   }
 
-
-  // Hardkodovani korisnici za test
-  const allUsers = [
-    { id: "1", name: "Stefan Popović", avatar: "https://i.pravatar.cc/40?img=1" },
-    { id: "2", name: "Ana Jovanović", avatar: "https://i.pravatar.cc/40?img=2" },
-    { id: "3", name: "Marko Marković", avatar: "https://i.pravatar.cc/40?img=3" },
-  ];
-
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    const filtered = allUsers.filter((u) =>
-      u.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setSearchResults(filtered);
+    if (!searchQuery.trim()) return;
+
+    try {
+      const res = await getUsers(searchQuery);
+      setSearchResults(res.data.users);
+      setError("");
+
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong..");
+    }
+
   };
 
   const handleSelectUser = (user) => {
     console.log("Selected user:", user);
     setSearchResults([]);
     setSearchQuery("");
-    // navigate(`/profile/${user.id}`) kasnije
+    navigate(`/profile/${user._id}`)
   };
 
 
   return (
     <nav className="h-navbar">
-      {/* LEVA SEKCIJA */}
+      {/* LEFT SECTION */}
       <div className="h-navbar-left">
         <i className="h-nav-icon fa-solid fa-layer-group"></i>
         <img src="/src/assets/logo.png" alt="Logo" className="h-nav-logo" onClick={() => navigate("/dashboard")}/>
@@ -76,7 +78,7 @@ export default function DashboardHorizontalNav() {
                 className="h-search-item"
                 onClick={() => handleSelectUser(user)}
               >
-                <img src={user.avatar} alt={user.name} />
+                <img src={user.avatar || logo} alt={user.name} />
                 <span className="h-search-username">{user.name}</span>
               </div>
             ))}
@@ -91,7 +93,7 @@ export default function DashboardHorizontalNav() {
         <i className="h-nav-icon fa-solid fa-gear"></i>
 
         <div className="h-avatar-container">
-          <img src={user.avatar} alt="User Avatar" className="h-nav-avatar" onClick={() => setAvatarDropdown(!avatarDropdown)}/>
+          <img src={user.avatar || logo} alt="User Avatar" className="h-nav-avatar" onClick={() => setAvatarDropdown(!avatarDropdown)}/>
           {avatarDropdown && (
             <div className="h-avatar-dropdown">
               <div className="h-avatar-item" onClick={() => handleProfile()}>

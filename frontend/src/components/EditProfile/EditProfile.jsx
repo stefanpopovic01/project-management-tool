@@ -6,8 +6,10 @@ function EditProfile({ user, onClose }) {
   const [form, setForm] = useState({
     username: user.username || "",
     email: user.email || "",
-    bio: user.description || "",
-    location: user.location || ""
+    name: user.name || "",
+    description: user.description || "",
+    location: user.location || "",
+    avatar: user.avatar
   });
 
   const [success, setSuccess] = useState(false);
@@ -41,18 +43,21 @@ function EditProfile({ user, onClose }) {
         <h2>Edit Profile</h2>
 
         <form className="edit-profile-form" onSubmit={handleSubmit}>
-          
-          <label>Username</label>
-          <input name="username" value={form.username} onChange={handleChange} />
+
+          <label>Name</label>
+          <input name="name" value={form.name} onChange={handleChange} />
 
           <label>Email</label>
           <input type="email" name="email" value={form.email} onChange={handleChange} />
 
           <label>Bio</label>
-          <textarea name="bio" rows="3" value={form.bio} onChange={handleChange} />
+          <textarea name="description" rows="3" value={form.description} onChange={handleChange} />
 
           <label>Location</label>
           <input type="text" name="location" value={form.location} onChange={handleChange} />
+
+          <label>Avatar</label>
+          <input type="text" name="avatar" value={form.avatar} onChange={handleChange} />
 
           <button className="save-btn" type="submit">Save changes</button>
           <button className="cancel-btn" type="button" onClick={onClose}>Cancel</button>
