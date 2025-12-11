@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Project = require("../models/Project");
 
 function auth(req, res, next) {
   const header = req.headers.authorization;
@@ -29,4 +30,52 @@ function allowSelf(req, res, next) {
     next();
 }
 
-module.exports = { auth, allowSelf };
+async function projectAccess(req, res, next) {
+  try {
+    const projectId = req.params.id;
+    const userId = req.user.id;
+
+    const project = await Project.findById(projectId);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found." });
+    }
+
+    const isCreator = project.creator.toString() === userId;
+    const isAcceptedEmployee = project.employees.some(
+      (e) => e.user?.toString() === userId && e.accepted
+    );
+
+    if (!isCreator && !isAcceptedEmployee) {
+      return res.status(403).json({ message: "Not authorized." });
+    }
+
+    next();
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+async function projectEdit(req, res, next) {
+  try {
+      const projectId = req.params.id;
+      const userId = req.user.id;
+
+      const project = await Project.findById(projectId);
+
+      if (!project) {
+        return res.status(404).json({ message: "Project not found." });
+      }
+      const isCreator = project.creator.toString() === userId;
+      if (!isCreator) {
+        return res.status(403).json({ message: "Not autorized." });
+      }
+      next();
+
+  }
+  catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { auth, allowSelf, projectAccess, projectEdit };
