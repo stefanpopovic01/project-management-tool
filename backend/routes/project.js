@@ -5,7 +5,7 @@ const { auth, allowSelf, projectAccess, projectEdit } = require("../middleware/a
 
 router.get("/", auth, projectController.getProjects);
 router.post("/", auth, projectController.createProject);
-router.get("/single/:id", auth, projectAccess, projectController.getProjectById); // proveriti jos da li zaposleni moze da pristupi zbog projectacces
+router.get("/single/:id", auth, projectAccess, projectController.getProjectById);
 router.patch("/:id", auth, projectEdit, projectController.updateProject);
 router.delete("/:id", auth, projectEdit, projectController.deleteProject);
 router.post("/invite", auth, projectController.inviteUser);

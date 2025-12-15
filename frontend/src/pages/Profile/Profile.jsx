@@ -5,6 +5,7 @@ import { getUser } from '../../api/services/userServices';
 import { AuthContext } from '../../contex/AuthContext';
 import EditProfile from '../../components/EditProfile/EditProfile';
 import defaultLogo from "../../assets/defaultUser.png"
+import InviteToProject from '../../components/InviteToProject/InviteToProject';
 
 
 function Profile() {
@@ -14,6 +15,8 @@ const [user, setUser] = useState(null);
 const [loading, setLoading] = useState(true);
 const [showEdit, setShowEdit] = useState(false);
 const { user: loggedInUser } = useContext(AuthContext);
+const [showInvite, setShowInvite] = useState(false);
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,6 +42,8 @@ const { user: loggedInUser } = useContext(AuthContext);
   if (loading) return <p>Loading...</p>;
   if (!user) return <p>User not found</p>;
   const isOwner = loggedInUser?.id === id;
+
+
 
   return (
     <div className='profile-wrap'>
@@ -68,7 +73,7 @@ const { user: loggedInUser } = useContext(AuthContext);
 
         <p className="profile-desc">{user.description || "I am using PlanStack.."}</p>
 
-        <button className="edit-btn" onClick={() => setShowEdit(true)}>
+        <button className="edit-btn" onClick={isOwner ? () => setShowEdit(true) : () => setShowInvite(true)}>
           <i className="fa-solid fa-pen"></i> {isOwner ? "Edit profile" : "Invite"}
         </button>
       </div>
@@ -93,6 +98,10 @@ const { user: loggedInUser } = useContext(AuthContext);
           
       {showEdit && (
         <EditProfile user={loggedInUser} onClose={() => setShowEdit(false)} />
+      )}
+
+      {showInvite && (
+        <InviteToProject onClose={() => setShowInvite(false)} userId={id}/>
       )}
     </div>
   )

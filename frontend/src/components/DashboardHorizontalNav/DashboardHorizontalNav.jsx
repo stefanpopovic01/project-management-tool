@@ -5,12 +5,13 @@ import { AuthContext } from "../../contex/AuthContext";
 import { getUsers } from "../../api/services/userServices";
 import logo from "../../assets/defaultUser.png";
 
-export default function DashboardHorizontalNav() {
+export default function DashboardHorizontalNav( { showCreateProject, setShowCreateProject }) {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [avatarDropdown, setAvatarDropdown] = useState(false);
   const [error, setError] = useState("");
+
 
   const { user, token, logout } = useContext(AuthContext);
 
@@ -67,7 +68,7 @@ export default function DashboardHorizontalNav() {
           />
           <button type="submit">Search</button>
         </form>
-        <button className="h-create-btn">Create Project</button>
+        <button className="h-create-btn" onClick={() => setShowCreateProject(!showCreateProject)}>Create Project</button>
 
         {/* SEARCH DROPDOWN */}
         {searchResults.length > 0 && (

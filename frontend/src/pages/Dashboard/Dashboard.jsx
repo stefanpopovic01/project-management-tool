@@ -1,14 +1,27 @@
 import "./Dashboard.css";
+import { getProjects } from "../../api/services/projectServices";
+import { useState, useEffect } from "react";
 
 export default function Dashboard() {
 
-  // Hard-coded projekti
-  const recentProjects = [
-    { id: 1, name: "Marketing Website Redesign", description: "UI updates and new landing pages" },
-    { id: 2, name: "Mobile App Sprint 12", description: "Bug fixes + new settings page" },
-    { id: 3, name: "CRM Optimization", description: "Database cleanup and performance audit" },
-    { id: 4, name: "Internal Tools Revamp", description: "Improved dashboard for support team" },
-  ];
+    const [projects, setProjects] = useState([]);
+    const [count, setCount] = useState(0);
+
+    const getProjects1 = async () => {
+      try {
+        const res = await getProjects();
+
+        setProjects(res.data.projects);
+        setCount(res.data.count);
+
+      } catch (err) {
+        console.error("Error while fetching projects:", err.response ? err.response.data : err.message);
+      }
+    };
+    
+  useEffect(() => {
+    getProjects1();
+  }, []);
 
   return (
     <div className='dashboard-containter'>
@@ -17,8 +30,8 @@ export default function Dashboard() {
         <h2 className="dash-title">Recent Projects</h2>
 
         <div className="dash-projects-row">
-          {recentProjects.map((p) => (
-            <div key={p.id} className="dash-project-card">
+          {projects.map((p) => (
+            <div key={p._id} className="dash-project-card">
               <i className="fa-solid fa-diagram-project"></i>
               <h3>{p.name}</h3>
               <p>{p.description}</p>

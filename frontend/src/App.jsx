@@ -10,6 +10,9 @@ import Profile from './pages/Profile/Profile';
 import Dashboard from './pages/Dashboard/Dashboard';
 import DashboardHorizontalNav from './components/DashboardHorizontalNav/DashboardHorizontalNav';
 import DashboardVerticalNav from './components/DashboardVerticalNav/DashboardVerticalNav';
+import CreateProject from './components/CreateProject/CreateProject';
+
+import { useState } from 'react';
 
 function App() {
 
@@ -21,12 +24,15 @@ function App() {
     
   const onlyDashboardRoute = location.pathname.startsWith("/dashboard");
 
+  const [showCreateProject, setShowCreateProject] = useState(false);
+
   return (
     <>
 
       {!isDashboardRoute && <Navbar />}
-      {isDashboardRoute && <DashboardHorizontalNav />}
+      {isDashboardRoute && <DashboardHorizontalNav showCreateProject = {showCreateProject} setShowCreateProject={setShowCreateProject} />}
       {onlyDashboardRoute && <DashboardVerticalNav />}
+      {showCreateProject && <CreateProject onClose={setShowCreateProject}/>}
 
         <main>
           <Routes>

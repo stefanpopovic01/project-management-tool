@@ -1,0 +1,85 @@
+.cp-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.cp-modal {
+  width: 30rem;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cp-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.cp-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.cp-field label {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  color: #444;
+}
+
+.cp-field input,
+.cp-field textarea {
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.4rem;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+}
+
+.cp-field textarea {
+  resize: none;
+  height: 5rem;
+}
+
+.cp-field input:focus,
+.cp-field textarea:focus {
+  outline: none;
+  border-color: #10b981;
+}
+
+.cp-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.cp-cancel {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.cp-submit {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.4rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.cp-submit:hover {
+  background-color: #059669;
+}
