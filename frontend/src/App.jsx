@@ -11,6 +11,8 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import DashboardHorizontalNav from './components/DashboardHorizontalNav/DashboardHorizontalNav';
 import DashboardVerticalNav from './components/DashboardVerticalNav/DashboardVerticalNav';
 import CreateProject from './components/CreateProject/CreateProject';
+import AssignedProjects from './pages/AssignedProjects/AssignedProjects';
+import ProjectBoard from './pages/ProjectBoard/ProjectBoard';
 
 import { useState } from 'react';
 
@@ -20,9 +22,13 @@ function App() {
 
   const isDashboardRoute =
     location.pathname.startsWith("/dashboard") ||
-    location.pathname.startsWith("/profile/");
+    location.pathname.startsWith("/profile/") ||
+    location.pathname.startsWith("/my") ||
+    location.pathname.startsWith("/assigned");
     
-  const onlyDashboardRoute = location.pathname.startsWith("/dashboard");
+  const onlyDashboardRoute = 
+    location.pathname.startsWith("/dashboard") || 
+    location.pathname.startsWith("/assigned");
 
   const [showCreateProject, setShowCreateProject] = useState(false);
 
@@ -40,6 +46,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
+            <Route path='/assigned-projects' element={<AssignedProjects/>}/>
+            <Route path='/my-assigned-project/:projectId' element={<ProjectBoard/>}/>
             <Route path="/profile/:id" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
           </Routes>
         </main>

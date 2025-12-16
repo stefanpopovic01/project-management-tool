@@ -19,3 +19,15 @@ export const getInvites = () => {
 export const respondToInvite = (body) => {
     return api.patch("/project/invite/respond", body);
 }
+
+export const assignedProjects = () => {
+    return api.get("/project/assigned-projects");
+}
+
+export const getProjectById = (projectId) => {
+  return api.get(`/project/single/${projectId}`);
+}
+
+export const getEmployees = (projectId) => {
+  return api.get(`/project/employees/${projectId}`);
+}

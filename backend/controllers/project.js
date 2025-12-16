@@ -168,5 +168,53 @@ async function getMyInvites(req, res) {
   }
 }
 
+async function assignedProjects(req, res) {
+  try {
+    const userId = req.user.id;
 
-module.exports = { getProjects, createProject, getProjectById, updateProject, deleteProject, inviteUser, respondInvite, getMyInvites };
+    const projects = await Project.find({
+      employees: {
+        $elemMatch: {
+          user: userId,
+          accepted: true
+        }
+      }
+    })
+      .populate("creator", "name email");
+
+    return res.status(200).json({
+      count: projects.length,
+      projects
+    });
+
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+async function getProjectEmployees(req, res) {
+  try {
+
+    const project = await Project.findById(req.params.id)
+      .populate("employees.user", "name email");
+
+    if (!project)
+      return res.status(404).json({ message: "Project not found." });
+
+    const employees = project.employees
+      .filter(emp => emp.accepted === true)
+      .map(emp => emp.user);
+
+    return res.status(200).json({
+      count: employees.length,
+      employees
+    });
+
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+
+
+module.exports = { getProjects, createProject, getProjectById, updateProject, deleteProject, inviteUser, respondInvite, getMyInvites, assignedProjects, getProjectEmployees };

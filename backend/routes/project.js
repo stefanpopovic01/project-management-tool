@@ -11,6 +11,8 @@ router.delete("/:id", auth, projectEdit, projectController.deleteProject);
 router.post("/invite", auth, projectController.inviteUser);
 router.patch("/invite/respond", auth, projectController.respondInvite);
 router.get("/invites", auth, projectController.getMyInvites);
+router.get("/assigned-projects", auth, projectController.assignedProjects);
+router.get("/employees/:id", auth, projectEdit, projectController.getProjectEmployees);
 
 
 module.exports = router;

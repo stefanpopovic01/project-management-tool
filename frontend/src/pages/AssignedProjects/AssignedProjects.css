@@ -1,0 +1,86 @@
+.assignedProjects-container {
+  width: 100%;
+  height: 100vh;
+  padding-top: 4rem;      /* horizontal navbar */
+  padding-left: 250px;    /* vertical navbar */
+}
+
+.assignedProjects-content {
+  width: 100%;
+  padding: 2rem;
+  cursor: pointer;
+}
+
+/* TITLE */
+.assignedProjects-title {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+}
+
+/* EMPTY STATE */
+.assignedProjects-empty {
+  font-size: 1rem;
+  color: #777;
+}
+
+/* PROJECT ROW */
+.assignedProjects-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* CARD */
+.assignedProjects-card {
+  width: 18rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.assignedProjects-card i {
+  font-size: 1.4rem;
+  color: #5b6cff;
+}
+
+/* INFO */
+.assignedProjects-info h3 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.assignedProjects-info p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* STATUS BADGE */
+.assignedProjects-status {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.5rem;
+  text-transform: capitalize;
+}
+
+.assignedProjects-status.planning {
+  background: #eef1ff;
+  color: #5b6cff;
+}
+
+.assignedProjects-status.in-progress {
+  background: #fff4e5;
+  color: #ff9800;
+}
+
+.assignedProjects-status.finished {
+  background: #e7f7ed;
+  color: #2e7d32;
+}

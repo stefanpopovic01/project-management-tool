@@ -1,11 +1,13 @@
 import "./Dashboard.css";
 import { getProjects } from "../../api/services/projectServices";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
 
     const [projects, setProjects] = useState([]);
     const [count, setCount] = useState(0);
+    const navigate = useNavigate();
 
     const getProjects1 = async () => {
       try {
@@ -31,12 +33,14 @@ export default function Dashboard() {
 
         <div className="dash-projects-row">
           {projects.map((p) => (
-            <div key={p._id} className="dash-project-card">
+            <div key={p._id} className="dash-project-card" onClick={() => navigate(`/my-assigned-project/${p._id}`)}>
               <i className="fa-solid fa-diagram-project"></i>
               <h3>{p.name}</h3>
               <p>{p.description}</p>
             </div>
           ))}
+          {projects.length < 1 && <p className="dashboard-createP-message">Create project to get started..</p>}
+
         </div>
 
         <div className="dash-footer-logo">

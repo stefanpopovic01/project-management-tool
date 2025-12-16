@@ -31,7 +31,7 @@ export default function DashboardVerticalNav() {
         </li>
         <li>
           <i className="fa-solid fa-clock-rotate-left"></i>
-          <span>Activity</span>
+          <span onClick={() => navigate("/assigned-projects")}>Assigned Projects</span>
         </li>
         <li>
           <i className="fa-solid fa-comments"></i>
