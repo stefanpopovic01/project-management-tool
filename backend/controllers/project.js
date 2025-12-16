@@ -144,4 +144,29 @@ async function respondInvite(req, res) {
   }
 };
 
-module.exports = { getProjects, createProject, getProjectById, updateProject, deleteProject, inviteUser, respondInvite };
+async function getMyInvites(req, res) {
+  try {
+    const userId = req.user.id;
+
+    const projects = await Project.find({
+      employees: {
+        $elemMatch: {
+          user: userId,
+          accepted: false
+        }
+      }
+    })
+    .populate("creator", "name email");
+
+    res.status(200).json({
+      count: projects.length,
+      projects
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+
+module.exports = { getProjects, createProject, getProjectById, updateProject, deleteProject, inviteUser, respondInvite, getMyInvites };

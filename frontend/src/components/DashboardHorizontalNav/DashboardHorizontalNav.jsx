@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contex/AuthContext";
 import { getUsers } from "../../api/services/userServices";
+import { getInvites, respondToInvite } from "../../api/services/projectServices";
 import logo from "../../assets/defaultUser.png";
 
 export default function DashboardHorizontalNav( { showCreateProject, setShowCreateProject }) {
@@ -10,6 +11,7 @@ export default function DashboardHorizontalNav( { showCreateProject, setShowCrea
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [avatarDropdown, setAvatarDropdown] = useState(false);
+  const [notifcationDropdown, setNotificationDropdown] = useState(false);
   const [error, setError] = useState("");
 
 
@@ -46,6 +48,32 @@ export default function DashboardHorizontalNav( { showCreateProject, setShowCrea
     setSearchQuery("");
     navigate(`/profile/${user._id}`)
   };
+
+  const [invites, setInvites] = useState([]);
+  const [count, setCount] = useState(0);
+
+  const fetchInvites = async () => {
+    try {
+      const res = await getInvites();
+
+      setInvites(res.data.projects);
+      setCount(res.data.count);
+      setNotificationDropdown(!notifcationDropdown);
+
+    } catch (err) {
+      console.error("Error while getting invites", err);
+    }
+  };
+
+  const inviteRespond = async (projectId, accept) => {
+    try {
+      const res = await respondToInvite({ projectId, accept });
+      setNotificationDropdown(!notifcationDropdown);
+
+    } catch (err) {
+      console.error("Error while responding to invite ", err);
+    }
+  }
 
 
   return (
@@ -90,8 +118,22 @@ export default function DashboardHorizontalNav( { showCreateProject, setShowCrea
       {/* RIGHT SECTION */}
       <div className="h-navbar-right">
         <i className="h-nav-icon fa-solid fa-circle-question"></i>
-        <i className="h-nav-icon fa-solid fa-bell"></i>
-        <i className="h-nav-icon fa-solid fa-gear"></i>
+        <i className="h-nav-icon fa-solid fa-bell" onClick={() => fetchInvites()}></i>
+        <i className="h-nav-icon fa-solid fa-gear notifcation-icon"></i>
+
+      {notifcationDropdown &&
+        <div className="notification-containter">
+          {invites.map((p) => (
+              <div className="notification" key={p._id}>
+                  <p>{p.name}</p>
+                  <i class="fa fa-check notification-check" aria-hidden="true" onClick={() => inviteRespond(p._id, true)}></i>
+                  <i class="fa-solid fa-x notification-decline"></i>
+              </div>
+          ))}
+        </div>
+      }
+
+
 
         <div className="h-avatar-container">
           <img src={user.avatar || logo} alt="User Avatar" className="h-nav-avatar" onClick={() => setAvatarDropdown(!avatarDropdown)}/>

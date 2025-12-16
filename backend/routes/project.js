@@ -10,6 +10,7 @@ router.patch("/:id", auth, projectEdit, projectController.updateProject);
 router.delete("/:id", auth, projectEdit, projectController.deleteProject);
 router.post("/invite", auth, projectController.inviteUser);
 router.patch("/invite/respond", auth, projectController.respondInvite);
+router.get("/invites", auth, projectController.getMyInvites);
 
 
 module.exports = router;
