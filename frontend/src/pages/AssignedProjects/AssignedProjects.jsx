@@ -1,12 +1,13 @@
 import "./AssignedProjects.css";
 import { useEffect, useState } from "react";
 import { assignedProjects } from "../../api/services/projectServices";
+import { useNavigate } from "react-router-dom";
 
 export default function AssignedProjects() {
   const [projects, setProjects] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate();
   const fetchAssignedProjects = async () => {
     try {
       const res = await assignedProjects();
@@ -51,7 +52,7 @@ export default function AssignedProjects() {
         ) : (
           <div className="assignedProjects-row">
             {projects.map((p) => (
-              <div key={p._id} className="assignedProjects-card">
+              <div key={p._id} className="assignedProjects-card" onClick={() => navigate(`/assigned-projects/${p._id}`)}>
                 <i className="fa-solid fa-diagram-project"></i>
 
                 <div className="assignedProjects-info">

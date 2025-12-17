@@ -1,21 +1,35 @@
 import { useState } from "react";
 import "./AddTaskDropdown.css";
+import { createTask } from "../../api/services/taskServices";
 
 
-export default function AddTaskDropDown({ employees, onClose }) {
+export default function AddTaskDropDown({ employees, onClose, project }) {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [taskTitle, setTaskTitle] = useState("");
+  const [title, setTaskTitle] = useState("");
+  const [description, setTaskDesc] = useState("");
 
   const handleEmployeeClick = (employee) => {
     setSelectedEmployee(employee);
-    setTaskTitle(""); // reset input
+    setTaskTitle("");
+    setTaskDesc("");
   };
 
   const handleAddTask = () => {
-    console.log(`Add task "${taskTitle}" to`, selectedEmployee);
-    // kasnije ovde ide poziv API-ja
-    setTaskTitle("");
-    setSelectedEmployee(null);
+    try {
+      const res = createTask({ title, description, project, assignedTo: selectedEmployee._id });
+
+      const message = res.data.message;
+      const task = res.data.task;
+      console.log(message, " ", task);
+
+      setTaskTitle("");
+      setTaskDesc("");
+      setSelectedEmployee(null);
+
+    } catch (err) {
+      console.error("Error while creating task: ", err);
+    }
+  
   };
 
   return (
@@ -29,24 +43,26 @@ export default function AddTaskDropDown({ employees, onClose }) {
               <button  onClick={() => handleEmployeeClick(emp)}>
                 {emp.name}
               </button>
+            </div>
+          ))}
 
               {selectedEmployee && (
                 <div className="addtask-dropdown">
                   <input
                     type="text"
                     placeholder="Task title"
-                    value={taskTitle}
+                    value={title}
                     onChange={(e) => setTaskTitle(e.target.value)}
                   />
                   <input
                     type="text"
                     placeholder="Task description"
+                    value={description}
+                    onChange={(e) => setTaskDesc(e.target.value)}
                   />
                   <button onClick={handleAddTask}>Add Task</button>
                 </div>
               )}
-            </div>
-          ))}
         </div>
 
         <button className="addtask-close" onClick={onClose}>

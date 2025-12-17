@@ -106,7 +106,7 @@ useEffect(() => {
         </div>
       </div>
       {showAddTask && (
-        <AddTaskDropdown onClose={() => setShowAddTask(false)}  employees={employees} />
+        <AddTaskDropdown onClose={() => setShowAddTask(false)}  employees={employees} project={projectId}/>
       )}
     </div>
   );

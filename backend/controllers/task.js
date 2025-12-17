@@ -2,24 +2,25 @@ const Task = require("../models/Task");
 const Project = require("../models/Project");
 
 async function getTasks(req, res) {
-    try {
-        const employeeId = req.params.id;
+  try {
+    const userId = req.user.id;
+    const projectId = req.params.id;
 
-        if (req.user.id !== employeeId) {
-        return res.status(403).json({ message: "Not authorized to view these tasks." });
-        }
+    const tasks = await Task.find({
+      assignedTo: userId,
+      project: projectId
+    });
 
-        const tasks = await Task.find( { assignedTo : req.params.id} );
+    return res.status(200).json({
+      count: tasks.length,
+      tasks
+    });
 
-        return res.status(200).json({
-        count: tasks.length,
-        tasks
-        });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
 
-    } catch (err) {
-        return res.status(500).json({ error: err.message });
-    }
-};
 
 async function getTaskById(req, res) {
     try {

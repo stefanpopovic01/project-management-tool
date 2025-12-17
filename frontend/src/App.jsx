@@ -15,6 +15,7 @@ import AssignedProjects from './pages/AssignedProjects/AssignedProjects';
 import ProjectBoard from './pages/ProjectBoard/ProjectBoard';
 
 import { useState } from 'react';
+import AssignedTasks from './pages/AssignedTasks/AssignedTasks';
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
             <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
             <Route path='/assigned-projects' element={<AssignedProjects/>}/>
             <Route path='/my-assigned-project/:projectId' element={<ProjectBoard/>}/>
+            <Route path='/assigned-projects/:projectId' element={<AssignedTasks/>} />
             <Route path="/profile/:id" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
           </Routes>
         </main>
