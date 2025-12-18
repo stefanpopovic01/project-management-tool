@@ -34,7 +34,7 @@
 .edit-modal h2 {
   text-align: center;
   margin-bottom: 1rem;
-  color: #4b5563;
+  color: #242425;
 }
 
 .edit-profile-form {
@@ -45,7 +45,7 @@
 
 .edit-profile-form label {
   font-weight: 600;
-  color: #4b5563;
+  color: #242425;
 }
 
 .edit-profile-form input,
@@ -74,4 +74,12 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.save-btn:hover{
+  background: #449d47;
+}
+
+.cancel-btn:hover{
+  background: #c64d49;
 }

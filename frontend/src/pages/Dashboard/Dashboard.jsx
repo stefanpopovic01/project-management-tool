@@ -29,7 +29,7 @@ export default function Dashboard() {
     <div className='dashboard-containter'>
       <div className='dashboard-content'>
         
-        <h2 className="dash-title">Recent Projects</h2>
+        <h2 className="dash-title">Recent Projects ({count})</h2>
 
         <div className="dash-projects-row">
           {projects.map((p) => (
@@ -40,7 +40,6 @@ export default function Dashboard() {
             </div>
           ))}
           {projects.length < 1 && <p className="dashboard-createP-message">Create project to get started..</p>}
-
         </div>
 
         <div className="dash-footer-logo">

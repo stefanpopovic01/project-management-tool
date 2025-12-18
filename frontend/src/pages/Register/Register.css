@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #fff;
+  background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);
   padding-top: 5rem;
 }
 

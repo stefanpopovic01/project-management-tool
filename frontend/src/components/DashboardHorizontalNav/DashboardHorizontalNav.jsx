@@ -125,7 +125,7 @@ export default function DashboardHorizontalNav( { showCreateProject, setShowCrea
         <div className="notification-containter">
           {invites.map((p) => (
               <div className="notification" key={p._id}>
-                  <p>{p.name}</p>
+                  <p>{p.creator.name} invited you to <span>{p.name}</span></p>
                   <i class="fa fa-check notification-check" aria-hidden="true" onClick={() => inviteRespond(p._id, true)}></i>
                   <i class="fa-solid fa-x notification-decline"></i>
               </div>

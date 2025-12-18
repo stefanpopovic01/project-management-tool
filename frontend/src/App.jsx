@@ -13,6 +13,7 @@ import DashboardVerticalNav from './components/DashboardVerticalNav/DashboardVer
 import CreateProject from './components/CreateProject/CreateProject';
 import AssignedProjects from './pages/AssignedProjects/AssignedProjects';
 import ProjectBoard from './pages/ProjectBoard/ProjectBoard';
+import Footer from './components/Footer/Footer';
 
 import { useState } from 'react';
 import AssignedTasks from './pages/AssignedTasks/AssignedTasks';
@@ -30,6 +31,10 @@ function App() {
   const onlyDashboardRoute = 
     location.pathname.startsWith("/dashboard") || 
     location.pathname.startsWith("/assigned");
+
+  const onlyFooterRoute = 
+    location.pathname.startsWith("/login") ||
+    location.pathname.startsWith("/register");
 
   const [showCreateProject, setShowCreateProject] = useState(false);
 
@@ -53,6 +58,8 @@ function App() {
             <Route path="/profile/:id" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
           </Routes>
         </main>
+
+         {onlyFooterRoute && <Footer/>}
     </>
   )
 }

@@ -1,5 +1,7 @@
 const Task = require("../models/Task");
 const Project = require("../models/Project");
+const updateProjectStatus = require("../utils/updateProjectStatus");
+
 
 async function getTasks(req, res) {
   try {
@@ -70,6 +72,8 @@ async function createTask(req, res) {
     });
 
     await task.save();
+  
+  await updateProjectStatus(task.project);
 
     res.status(201).json({
       message: "Task created.",
@@ -94,6 +98,8 @@ async function updateTask(req, res) {
 
     Object.assign(task, req.body);
     await task.save();
+
+    await updateProjectStatus(task.project);
 
     res.status(200).json({
       message: "Task updated.",
