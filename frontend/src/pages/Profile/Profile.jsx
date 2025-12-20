@@ -6,7 +6,10 @@ import { AuthContext } from '../../contex/AuthContext';
 import EditProfile from '../../components/EditProfile/EditProfile';
 import defaultLogo from "../../assets/defaultUser.png"
 import InviteToProject from '../../components/InviteToProject/InviteToProject';
-
+import { getProjects } from '../../api/services/projectServices';
+import { assignedProjects } from '../../api/services/projectServices';
+import { fetchUserProjects } from '../../api/services/projectServices';
+import { fetchAssignedProjects } from '../../api/services/projectServices';
 
 function Profile() {
 
@@ -16,6 +19,10 @@ const [loading, setLoading] = useState(true);
 const [showEdit, setShowEdit] = useState(false);
 const { user: loggedInUser } = useContext(AuthContext);
 const [showInvite, setShowInvite] = useState(false);
+const [projects, setProjects] = useState([]);
+const [count, setCount] = useState(0);
+const [assignedProjects1, setAssignedProjects] = useState([]);
+const [assignedCount, setAssignedCount] = useState(0);
 
 
   useEffect(() => {
@@ -31,8 +38,39 @@ const [showInvite, setShowInvite] = useState(false);
       }
     };
 
+    const getProjects1 = async () => {
+      try {
+        const res = await fetchUserProjects(id);
+
+        setProjects(res.data.projects);
+        setCount(res.data.count);
+
+      } catch (err) {
+        console.error("Error while fetching projects:", err.response ? err.response.data : err.message);
+      }
+    };
+
+  const fetchAssignedProjects1 = async () => {
+    try {
+      const res = await fetchAssignedProjects(id);
+
+      setAssignedProjects(res.data.projects);
+      setAssignedCount(res.data.count);
+    } catch (err) {
+      console.error(
+        "Error fetching assigned projects:",
+        err.response?.data || err.message
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
     fetchUser();
-  }, [id]); // pokreće se kad se id promeni
+    getProjects1();
+    fetchAssignedProjects1();
+  }, [id]);
 
   const testUser = {
     projectsCreated: ["Project Manager App", "Task Tracker", "Chat Platform"],
@@ -82,16 +120,18 @@ const [showInvite, setShowInvite] = useState(false);
       <div className="profile-projects">
         <h3><i className="fa-solid fa-folder-open"></i> Projects Created</h3>
         <ul>
-          {testUser.projectsCreated.map((p, i) => (
-            <li key={i}>{p}</li>
+          {projects.map((p, i) => (
+            <li key={i}>{p.name}</li>
           ))}
+          {count < 1 && <p>Zero projects created.</p>}
         </ul>
 
         <h3><i className="fa-solid fa-diagram-project"></i> Projects Contributed</h3>
         <ul>
-          {testUser.projectsContributed.map((p, i) => (
-            <li key={i}>{p}</li>
+          {assignedProjects1.map((p, i) => (
+            <li key={i}>{p.name}</li>
           ))}
+          {assignedCount < 1 && <p>Zero projects assigned.</p>}
         </ul>
       </div>
     </div>

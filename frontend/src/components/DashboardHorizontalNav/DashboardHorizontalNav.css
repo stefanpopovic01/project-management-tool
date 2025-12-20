@@ -221,3 +221,7 @@
 .bell-icon{
   color: #3b82f6;
 }
+
+.notification-containter p{
+  padding-left: 0.5rem;
+}

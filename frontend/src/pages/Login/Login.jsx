@@ -3,6 +3,7 @@ import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/services/authServices';
 import { AuthContext } from '../../contex/AuthContext';
+import photo from '../../assets/login-background.jpg';
 
 
 function Login() {

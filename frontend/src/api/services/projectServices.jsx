@@ -31,3 +31,11 @@ export const getProjectById = (projectId) => {
 export const getEmployees = (projectId) => {
   return api.get(`/project/employees/${projectId}`);
 }
+
+export const fetchUserProjects = (id) => {
+    return api.get(`/project/user-projects/${id}`);
+}
+
+export const fetchAssignedProjects = (id) => {
+    return api.get(`/project/fetch-assigned-projects/${id}`);
+}

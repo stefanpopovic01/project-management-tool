@@ -5,6 +5,7 @@ import { AuthContext } from "../../contex/AuthContext";
 import { getUsers } from "../../api/services/userServices";
 import { getInvites, respondToInvite } from "../../api/services/projectServices";
 import logo from "../../assets/defaultUser.png";
+import { useEffect } from "react";
 
 export default function DashboardHorizontalNav( { showCreateProject, setShowCreateProject }) {
   const navigate = useNavigate();
@@ -27,20 +28,41 @@ export default function DashboardHorizontalNav( { showCreateProject, setShowCrea
     setAvatarDropdown(!avatarDropdown);
   }
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
+  // const handleSearch = async (e) => {
+  //   e.preventDefault();
+  //   if (!searchQuery.trim()) return;
 
+  //   try {
+  //     const res = await getUsers(searchQuery);
+  //     setSearchResults(res.data.users);
+  //     setError("");
+
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || "Something went wrong..");
+  //   }
+
+  // };
+
+useEffect(() => {
+  if (!searchQuery.trim()) {
+    setSearchResults([]);
+    return;
+  }
+
+  const delay = setTimeout(async () => {
     try {
       const res = await getUsers(searchQuery);
       setSearchResults(res.data.users);
       setError("");
-
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong..");
     }
+  }, 500);
 
-  };
+  return () => clearTimeout(delay);
+
+}, [searchQuery]);
+
 
   const handleSelectUser = (user) => {
     console.log("Selected user:", user);
@@ -87,7 +109,7 @@ export default function DashboardHorizontalNav( { showCreateProject, setShowCrea
 
       {/* MID SECTION */}
       <div className="h-navbar-center">
-        <form onSubmit={handleSearch} className="h-search-form">
+        <form className="h-search-form">
           <input
             type="text"
             placeholder="Search users..."
@@ -130,6 +152,7 @@ export default function DashboardHorizontalNav( { showCreateProject, setShowCrea
                   <i class="fa-solid fa-x notification-decline"></i>
               </div>
           ))}
+          {count < 1 && <p>No new notifcations.</p>}
         </div>
       }
 

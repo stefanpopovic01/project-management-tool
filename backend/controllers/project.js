@@ -16,6 +16,21 @@ async function getProjects(req, res) {
   }
 };
 
+async function fetchUserProjects(req, res) {
+  try {
+    const projects = await Project.find({ creator: req.params.id })
+
+    return res.status(200).json({
+      count: projects.length,
+      projects
+    })
+  
+  } catch (err) {
+      return res.status(500).json({ error: err.message });
+  }
+}
+
+
 async function createProject(req, res) {
   try {
     const { name, description, deadline } = req.body;
@@ -192,6 +207,29 @@ async function assignedProjects(req, res) {
   }
 }
 
+
+async function fetchAssignedProjects(req, res) {
+  try {
+    const projects = await Project.find({
+      employees: {
+        $elemMatch: {
+          user: req.params.id,
+          accepted: true
+        }
+      }
+    })
+      .populate("creator", "name email");
+
+    return res.status(200).json({
+      count: projects.length,
+      projects
+    });
+
+  } catch {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
 async function getProjectEmployees(req, res) {
   try {
 
@@ -217,4 +255,4 @@ async function getProjectEmployees(req, res) {
 
 
 
-module.exports = { getProjects, createProject, getProjectById, updateProject, deleteProject, inviteUser, respondInvite, getMyInvites, assignedProjects, getProjectEmployees };
+module.exports = { getProjects, createProject, getProjectById, updateProject, deleteProject, inviteUser, respondInvite, getMyInvites, assignedProjects, getProjectEmployees, fetchUserProjects, fetchAssignedProjects };
